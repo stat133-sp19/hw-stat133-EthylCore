@@ -5,3 +5,12 @@ date: "March 13, 2019"
 output: github_document
 ---
 
+```{r, echo=FALSE}
+library(dplyr)
+shots_data <-  read.csv("../data/shots-data.csv")
+two_pt_perc <- c('Stephen Curry')
+group_by(shots_data, name)
+```
+```{r out.width='80%', echo = FALSE, fig.align='center'}
+knitr::include_graphics('../images/nba-court.jpg')
+```
