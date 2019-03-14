@@ -1,0 +1,1 @@
+The purpose of this assignment is to gain experience of using GitHub through the basketball data that we have been using all throughout class.
