@@ -5,12 +5,74 @@ date: "March 13, 2019"
 output: github_document
 ---
 
-```{r, echo=FALSE}
+```{r, echo = FALSE, message=FALSE, results='hide'}
 library(dplyr)
 shots_data <-  read.csv("../data/shots-data.csv")
-two_pt_perc <- c('Stephen Curry')
-group_by(shots_data, name)
+two_pt_perc <- summarise(group_by(shots_data, name), total = sum(shot_type == '2PT Field Goal'), made = sum(shot_type == '2PT Field Goal' & shot_made_flag == 'shot_yes'), perc_made = made/total) %>% arrange(desc(perc_made))
+
+three_pt_perc <- summarise(group_by(shots_data, name), total = sum(shot_type == '3PT Field Goal'), made = sum(shot_type == '3PT Field Goal' & shot_made_flag == 'shot_yes'), perc_made = made/total) %>% arrange(desc(perc_made))
+
+eff_pt_perc <- summarise(group_by(shots_data, name), total = length(shot_type), made = sum(shot_made_flag == 'shot_yes'), perc_made = made/total) %>% arrange(desc(perc_made))
+eff_pt_perc
 ```
+# The Warriors are the A-team of the NBA
+
+The **Warrior Dynasty** is upon us and is in full force with no signs of slowing down. After defeating LeBron James and the Cleveland Cavaliers again for the championship, the Warriors are ready to go into the next season even stronger than before with the acquisition of DeMarcus Cousins. With the starter line-up filled with All-Stars, the Warrior team can be considered a miniature version of an All-Star team or maybe even Team U.S.A.
+
+With such a strong team full of great players, many people wonder if all of the Warriors are equally skilled. It would be easy to guess that some Warriors in the franchise are much better than others and the gap in skill between them is significant. But how big is that gap. Steph Curry is easily the most talked about Warrior as his astronomical 3 point shooting is in a league of its own. But is it good enough to stand out among the other Warriors?
+
+To figure this out, I have obtained the 2 point and 3 point field goals that 5 of the top scoring Warriors have attempted throughout the 2016-2017 season.  
+The 5 players in question:  
+  - **Stephen Curry**: arguably *the* greatest 3 point shooter of all time and one of the leading point guards in the league.  
+  - **Klay Thompson**: One of the best 2 guards that the league has seen and rivals Steph Curry in the 3 point category.  
+  - **Kevin Durant**: A former Thunder who came to the Warriors looking for a championship. His incredible length and uncanny ability to shoot contested shots make him a scary SF with top-notch mid-range and 3 point shooting.  
+  - **Draymond Green**: A great hustler and expressive warrior who is one of the staple 2-way players in the league.  
+  - **Andre Iguodala**: A veteran player who is experienced in the ball game, and has a 6th man of the year award under his belt.
+  
+## The Data  
+
+All of this data has been conglomerated into a single table with all of the field goals attempted between these 5 players.  
+
+```{r echo=FALSE}
+head(shots_data, 20)
+```
+
+That's a lot of data! Let's see if we can use a visualization to help us look at much cleaner way of interpreting our data.
+
+
 ```{r out.width='80%', echo = FALSE, fig.align='center'}
-knitr::include_graphics('../images/nba-court.jpg')
+knitr::include_graphics('../images/gsw-shot-charts.png')
 ```
+
+
+Here we see the shot locations for all 5 players and whether or not they made or missed their shots. As we can see, the charts for Iguodala and Draymond Green are much more sparse and clustered in the middle. This makes sense as their primary objectives are to either create openings for other shooters to get open shots or to use their size and strength to get in the paint and get an easier to make layup. On the other side of the spectrum, the charts for Thompson and Curry show much more shots being made all over the court as they are the primary shooters on the team who are dependent upon to make the most amount of points.
+
+However, more shots being attempted does not equate to skill. Furthermore, how do we determine skill in a game as complicated as Basketball where so many different styles and objectives are at play. For our purposes, we will look at the field goal percentages for the 5 players and compare their 2 pt, 3 pt, and overall percentages to gain a more general picture as to who is better at shooting.
+
+From the data table shown above we can manipulate our data to arrive at more useful points of interest.
+
+```{r}
+two_pt_perc
+three_pt_perc
+eff_pt_perc
+```
+
+The first table shows field goal percentages for 2 pointers attempted by each player. The second table is for 3 pointers while the last table is an overall look at field goal percentages for both 2 and 3 pointers.
+
+## Analysis
+
+From the looks of it, one thing stands out at first glance. Stephen Curry is not at the top of any of these numbers. Even for 3 point percentages he is behind the .424 of Klay Thompson. For 2 pointers, Andre Iguodala seems to top the team in making those mid range to close range shots. Kevin Durant stands atop the others in the overall field goal table.
+
+These results could be explained by how Stephen Curry is always defended against at all costs while Klay Thompson is allowed some leeway at points. For Andre Iguodala, he attempts much lower shots in the paint than the rest of the Warriors, if he does attempt it, it is when he is quite sure that he's going to make the shot.
+
+From my point of view, I would say that the third table is the best indication of individual skill and that would go to Kevin Durant. He makes over half of his shots and attempted more than 2 times the amount attempted by Andre Iguodala, all while maintaining a higher FG percentage than Andre. However, this view still isn't a surefire way of showing skill as Durant attempted way more 2 pointers which are easier to make than 3 pointers. On a strict shooting standpoint, I would give it to Stephen Curry who consistently makes all kinds of tough attempts at the basket.
+
+## Conclusion
+
+Stephen Curry is heralded as the greatest shooter of all time. However, the numbers that we have arrived at suggest that others on the team have better percentages than him.
+
+Still, basketball is not the kind of game where numbers hold much meaning. Players get better or worse between games and get hot or cold even within games. Many points of skill exist in the game which are intangible and can't be quantified by numbers.
+
+All players in the NBA achieved where they are for a reason and every player has a role to play within each team. While Stephen Curry could be the best player on the team, he would be nothing without the help of his other teammates.
+
+As with all things, having others around to help allows one to achieve much greater things than what he could have achieved by himself.
