@@ -1,0 +1,12 @@
+name: Workout2
+title: Workout2
+username:
+account: ethylcore
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 874438
+bundleId: 2020589
+url: https://ethylcore.shinyapps.io/Workout2/
+when: 1555569908.05576
+asMultiple: FALSE
+asStatic: FALSE

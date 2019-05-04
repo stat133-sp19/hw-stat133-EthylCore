@@ -1,0 +1,71 @@
+---
+title: "Binomial Package Vignette"
+author: "Tyler Choe"
+date: "2019-5-2"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(binomial)
+library(ggplot2)
+```
+
+## Binomial Distribution
+This R package '"binomial"' is an implementation for several functions for calculating prabilites of a Binomial random variable, and several calculations.
+
+## Initialization of Data
+
+A binomial distribution object is first created through a '"bindis"' object with the function 'bin_distribution(trials, prob)':
+
+```{r}
+bin1 <- bin_distribution(5, .5)
+bin1
+```
+
+'bin_distribution' creates a data frame based on the input parameters with a success column from 0 to the number of trials inputted along with a column for the probability for each amount of successes based on the binomial formula.
+
+You may obtain a dataframe with an additional cumulative column which aggregates the probabilities in order by calling the function 'bin_cumulative':
+
+```{r}
+bin2 <- bin_cumulative(5, .5)
+bin2
+```
+
+## Summary Statistics for variable
+
+
+Using the functions 'bin_mean()', 'bin_variance()', 'bin_mode()', 'bin_skewness()', 'bin_kurtosis()', you can obtain several summary measures about a binomial variable by passing in the number of trials and probability.
+
+You are also able to see all of the measures in a condensed form by first creating a 'binvar' object by calling bin_variable(trials, prob).
+
+```{r}
+bin3 <- bin_variable(5, .5)
+bin3
+```
+
+By calling summary on the binvar object, the function returns a named list-like summary.binvar object which includes all of the previously mentioned measures.
+
+```{r}
+binsum1 <- summary(bin3)
+binsum1
+```
+
+## Visualizaion of binomial distributions
+
+You may call plot() on the 'bindis' and 'bincum' objects to obtain visualizations for these two binomial implementations to have a better understanding of these distributions.
+
+```{r}
+plot(bin1)
+plot(bin2)
+```
